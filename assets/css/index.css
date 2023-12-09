@@ -172,11 +172,18 @@ h2 {
 	border-radius: 5px;
 }
 .jumbotron-form p {
-	margin-bottom: 1em;
+	margin-bottom: 0.2em;
 	text-align: center;
 	font-size: 18px;
 }
 .jumbotron-form input {
+	outline: none;
+	width: 80%;
+	height: 2.5em;
+	padding: 0.5em;
+}
+
+.jumbotron-form select {
 	outline: none;
 	width: 80%;
 	height: 2.5em;

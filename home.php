@@ -2,7 +2,6 @@
 require_once "includes/metaheader.php";
 require_once "includes/header.php";
 ?>
-   
 
 	<div class="jumbotron-container">
 		<div class="jumbotron-left">
@@ -11,23 +10,25 @@ require_once "includes/header.php";
 				your health.</p>
 		</div>
 		<div class="jumbotron-right">
-			<form action="" class="jumbotron-form">
+			<form action="" class="jumbotron-form" method="post">
 				<!-- Put the form here -->
 					<h3>Book Now</h3><br>
 					<p>We provide great services and products.</p>
 					<label class="hide" for="arrival">arrival date</label>
-					<input type="text" id="arrival" name="arrival_date" placeholder="Arrival Date" onfocus="(this.type='date')" ><br>
-					<label class="hide" for="departure">departure date</label>
-					<input type="text"  id="departure" name="departure_date" placeholder="Departure Date" onfocus="(this.type='date')" ><br>
-					<label class="hide" for="guests">how many guests</label>
-					<input type="text" id="guests" name="guests" placeholder="Guests"><br>
-					<label class="hide" for="children">children</label>
-					<input type="text" id="children" name="children" placeholder="Children"><br>
+					<input type="text"  name="consulation_date" placeholder="Consultation Date" onfocus="(this.type='date')" ><br>
+					<input type="text"  name="lname" placeholder="Last Name"><br>
+					<input type="text"  name="fname" placeholder="First Name"><br>
+					<input type="text"  name="mname" placeholder="Middle Name"><br>
+					<input type="text"  name="dob" placeholder="Date of Birth" onfocus="(this.type='date')"><br>
+					<select name="gender">
+						<option selected="selected">Gender</option>
+						<option value ="Male">Male</option>
+						<option value ="Female">Female</option>
+					</select><br>
 					<button type="button" class="rates">Book Consultation</button>
 			</form>
 		</div>
 	</div>
-
 	<!-- Enjoy your stay in our hotel -->
 	<div class="enjoy-container">
 		<div class="enjoy-header">
