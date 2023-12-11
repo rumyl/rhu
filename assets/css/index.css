@@ -181,6 +181,7 @@ h2 {
 	width: 80%;
 	height: 2.5em;
 	padding: 0.5em;
+	margin-bottom: 10px;
 }
 
 .jumbotron-form select {
@@ -188,6 +189,7 @@ h2 {
 	width: 80%;
 	height: 2.5em;
 	padding: 0.5em;
+	margin-bottom: 10px;
 }
 
 .jumbotron-form button {

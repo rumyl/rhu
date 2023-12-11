@@ -1,6 +1,8 @@
 <?php
 require_once "includes/metaheader.php";
 require_once "includes/header.php";
+require_once "config/master.php";
+
 ?>
 
 	<div class="jumbotron-container">
@@ -10,22 +12,25 @@ require_once "includes/header.php";
 				your health.</p>
 		</div>
 		<div class="jumbotron-right">
-			<form action="" class="jumbotron-form" method="post">
-				<!-- Put the form here -->
+			<form action="" class="jumbotron-form" id="dataForm">
+
 					<h3>Book Now</h3><br>
 					<p>We provide great services and products.</p>
-					<label class="hide" for="arrival">arrival date</label>
-					<input type="text"  name="consulation_date" placeholder="Consultation Date" onfocus="(this.type='date')" ><br>
-					<input type="text"  name="lname" placeholder="Last Name"><br>
-					<input type="text"  name="fname" placeholder="First Name"><br>
-					<input type="text"  name="mname" placeholder="Middle Name"><br>
-					<input type="text"  name="dob" placeholder="Date of Birth" onfocus="(this.type='date')"><br>
-					<select name="gender">
+					<input type="text" id="appointment_date" onblur="checkDateValidity()"   min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>"  placeholder="Consultation Date" onfocus="(this.type='date')" >
+					<select id= "appointment_time">
+						<option>Please Select Time</option>
+					</select>
+					<input type="text"  id="email" placeholder="Email" autocomplete = "off">
+					<input type="text"  id="lname" placeholder="Last Name" autocomplete = "off">
+					<input type="text"  id="fname" placeholder="First Name" autocomplete = "off">
+					<input type="text"  id="mname" placeholder="Middle Name" autocomplete = "off">
+					<input type="text"  id="dob" placeholder="Date of Birth" onfocus="(this.type='date')" autocomplete = "off">
+					<select id="gender">
 						<option selected="selected">Gender</option>
 						<option value ="Male">Male</option>
 						<option value ="Female">Female</option>
-					</select><br>
-					<button type="button" class="rates">Book Consultation</button>
+					</select>
+					<button type="button" id = "btn-save" class="rates">Book Consultation</button>
 			</form>
 		</div>
 	</div>
@@ -74,8 +79,135 @@ require_once "includes/header.php";
 
 	</div>
 	<section class="special-offers">
-		<!-- Top Text -->
+	<script src="js/email.min.js"></script>
+	<script src="js/jquery-3.7.1.min.js"></script>
+	<script>
+
+		function generateRandomCode() {
+			const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+			let code = '';
+
+			for (let i = 0; i < 6; i++) {
+				const randomIndex = Math.floor(Math.random() * characters.length);
+				code += characters.charAt(randomIndex);
+			}
+
+			return code;
+		}
+
+		var code = generateRandomCode();
+
+		function checkDateValidity() {
+			var datePicker = document.getElementById('appointment_date');
+			var selectedDate = datePicker.value;
+
+			var currentDate = new Date();
+			var inputDate = new Date(selectedDate);
+
+			if(!isNaN(inputDate.getTime()) && inputDate >= currentDate) {
+
+				console.log("Selected date is valid: " + selectedDate);
+				getTime();
+
+			}else{
+				
+				alert("Invalid date. Please select a date from the current date onwards.");
+				datePicker.value = currentDate.toISOString().slice(0, 10);
+				getTime();
+			}
+		}
 		
+		function getTime() {
+
+			$(document).ready(function() {
+
+				var appointment_date = $("#appointment_date").val();
+				$.ajax({
+                        url: "get_time.php",
+                        method: "GET",
+                        data: { appointment_date: appointment_date },
+                        dataType: "json",
+                        success: function(response) {
+                            
+                            $("#appointment_time").html(response);
+                            
+                        }
+                });
+			});
+		}
+
+		
+
+		emailjs.init("hLlST_wMupMSMrePZ");
+		
+        function sendEmail() {
+            var email = document.getElementById('email').value;
+            var from_name = "RHU";
+            
+
+            emailjs.send("service_63zaoni", "template_h2uc9m9", {
+                to_email: email, 
+                from_name: from_name,
+                message: code
+            })
+            .then(response => {
+                console.log('Email sent:', response);
+                //alert('Email sent successfully!');
+            })
+            .catch(error => {
+                console.error('Error sending email:', error);
+                //alert('Error sending email. Please try again.');
+            });
+        }
+
+
+		function saveData() {
+    
+			var formData = {
+				appointment_date: $("#appointment_date").val(),
+				appointment_time: $("#appointment_time").val(),
+				email: 	$("#email").val(),
+				lname: 	$("#lname").val(),
+				fname: 	$("#fname").val(),
+				mname: 	$("#mname").val(),
+				dob: 	$("#dob").val(),
+				gender: $("#gender").val(),
+				code: code
+			};
+
+			$.ajax({
+				type: "POST",
+				url: "save_appointment2.php", 
+				data: formData,
+				success: function(response) {
+						//alert(response);
+						getValidation(response);
+
+				}
+			});
+		}
+
+		function getValidation(user_id) {
+    
+			$.ajax({
+				type: "GET",
+				url: "get_validation.php", 
+				data: { user_id: user_id },
+				success: function(response) {
+					$("#dataForm").html(response);
+				}
+			});
+		}
+
+
+        $(document).on("click", "#btn-save", function() {
+			
+			//sendEmail();
+			saveData();
+
+        });
+		
+	</script>
 	
 <?php
 
