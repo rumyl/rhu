@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="./assets/css/global-footer.css">
 	<link rel="stylesheet" href="./assets/css/accesibility.css">
 	<link rel="stylesheet" href="./assets/css/index.css">
-	<link rel="shortcut icon" href="./assets/img/logo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="./assets/img/rhu-logo.png" type="image/x-icon">
 </head>
 <body class="scroll-bar">
 	<div id="loader">

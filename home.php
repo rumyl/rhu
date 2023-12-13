@@ -24,7 +24,7 @@ require_once "config/master.php";
 					<input type="text"  id="lname" placeholder="Last Name" autocomplete = "off">
 					<input type="text"  id="fname" placeholder="First Name" autocomplete = "off">
 					<input type="text"  id="mname" placeholder="Middle Name" autocomplete = "off">
-					<input type="text"  id="dob" placeholder="Date of Birth" onfocus="(this.type='date')" autocomplete = "off">
+					<input type="text"  id="dob" placeholder="Date of Birth"  max="<?php echo date('Y-m-d', strtotime('-1 day')); ?>" onfocus="(this.type='date')" autocomplete = "off">
 					<select id="gender">
 						<option selected="selected">Gender</option>
 						<option value ="Male">Male</option>
@@ -199,11 +199,31 @@ require_once "config/master.php";
 			});
 		}
 
-
+		// Save Online Appointment
         $(document).on("click", "#btn-save", function() {
 			
 			//sendEmail();
 			saveData();
+
+        });
+
+		// Verify Email
+		$(document).on("click", "#btn-verify", function() {
+			
+			var verification_code = $("#verification_code").val();
+			
+			$.ajax({
+				type: "GET",
+				url: "check_validation.php", 
+				data: { verification_code: verification_code },
+				success: function(response) {
+					if(response == 1){
+						$("#dataForm").html("<h3>Congratulations!</h3><br\><p>You have successfully verified an email address, we will sent an email if your appointment has been book. Thank You!</p><br\><a href='home'><button type=\"button\"  class=\"rates\">Okay&nbsp;&nbsp;&nbsp;</button></a>");
+					}else{
+						alert("Incorrect code!");
+					}
+				}
+			});
 
         });
 		

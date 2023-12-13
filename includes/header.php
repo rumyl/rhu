@@ -2,9 +2,8 @@
       <div class="header-container">
          <nav class="header-nav-bar">
 				<div class="header-nav-logo">
-					<a href="index.html">
-						<img width="70px" src="assets/img/logo.png"
-							alt="star hotels logo">
+					<a href="home">
+						<img width="100px" src="assets/img/rhu-logo.png" alt="Clinic Logo">
 					</a>
 				</div>
 				<ul class="header-nav-lists">
