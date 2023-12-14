@@ -24,6 +24,7 @@ if(isset($_POST)) {
                     'fname'             => $fname,
                     'mname'             => $mname,
                     'gender'            => $gender,
+                    'dob'               => $dob,
                     'code'              => $code
                 );
                 

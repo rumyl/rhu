@@ -138,14 +138,14 @@ require_once "config/master.php";
 
 		
 
-		emailjs.init("hLlST_wMupMSMrePZ");
+		emailjs.init("wVg3d4jAxmEO6cB3l");
 		
         function sendEmail() {
             var email = document.getElementById('email').value;
             var from_name = "RHU";
             
 
-            emailjs.send("service_63zaoni", "template_h2uc9m9", {
+            emailjs.send("service_ldqt4wa", "template_7o2dmsb", {
                 to_email: email, 
                 from_name: from_name,
                 message: code
@@ -202,7 +202,7 @@ require_once "config/master.php";
 		// Save Online Appointment
         $(document).on("click", "#btn-save", function() {
 			
-			//sendEmail();
+			sendEmail(); // for email
 			saveData();
 
         });
