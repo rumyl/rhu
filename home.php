@@ -20,7 +20,7 @@ require_once "config/master.php";
 					<select id= "appointment_time">
 						<option>Please Select Time</option>
 					</select>
-					<input type="text"  id="email" placeholder="Email" autocomplete = "off">
+					<input type="text"  id="email" placeholder="Email" onblur="checkEmail()" autocomplete = "off">
 					<input type="text"  id="lname" placeholder="Last Name" autocomplete = "off">
 					<input type="text"  id="fname" placeholder="First Name" autocomplete = "off">
 					<input type="text"  id="mname" placeholder="Middle Name" autocomplete = "off">
@@ -136,6 +136,27 @@ require_once "config/master.php";
 			});
 		}
 
+
+		function isValidEmail(email) {
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			
+			return emailRegex.test(email);
+		}
+
+
+		function checkEmail() {
+
+			var email = document.getElementById('email').value;
+			
+			if (isValidEmail(email)) {
+				//alert('Email is valid.');
+			} else {
+				alert('Email is not valid.');
+			}
+			
+		}
+
+
 		
 
 		emailjs.init("wVg3d4jAxmEO6cB3l");
@@ -163,28 +184,36 @@ require_once "config/master.php";
 
 		function saveData() {
     
-			var formData = {
-				appointment_date: $("#appointment_date").val(),
-				appointment_time: $("#appointment_time").val(),
-				email: 	$("#email").val(),
-				lname: 	$("#lname").val(),
-				fname: 	$("#fname").val(),
-				mname: 	$("#mname").val(),
-				dob: 	$("#dob").val(),
-				gender: $("#gender").val(),
-				code: code
-			};
+			var email = document.getElementById('email').value;
+			
+			if (isValidEmail(email)) {
+				
+					var formData = {
+					appointment_date: $("#appointment_date").val(),
+					appointment_time: $("#appointment_time").val(),
+					email: 	$("#email").val(),
+					lname: 	$("#lname").val(),
+					fname: 	$("#fname").val(),
+					mname: 	$("#mname").val(),
+					dob: 	$("#dob").val(),
+					gender: $("#gender").val(),
+					code: code
+				};
 
-			$.ajax({
-				type: "POST",
-				url: "save_appointment2.php", 
-				data: formData,
-				success: function(response) {
-						//alert(response);
-						getValidation(response);
+				$.ajax({
+					type: "POST",
+					url: "save_appointment2.php", 
+					data: formData,
+					success: function(response) {
+							//alert(response);
+							getValidation(response);
 
-				}
-			});
+					}
+				});
+			} else {
+				alert('Email is not valid.');
+			}
+			
 		}
 
 		function getValidation(user_id) {
@@ -202,7 +231,7 @@ require_once "config/master.php";
 		// Save Online Appointment
         $(document).on("click", "#btn-save", function() {
 			
-			sendEmail(); // for email
+			sendEmail();
 			saveData();
 
         });
